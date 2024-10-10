@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #video-container {
+            background-color: #000;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        #controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        button, select {
+            padding: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="video-container">
+        <video id="video-player" controls>
+            <source src="" type="video/mp4" id="video-source">
+            Your browser does not support HTML5 video.
+        </video>
+
+        <div id="controls">
+            <button id="backward">⏪ 10s</button>
+            <button id="play-pause">⏯️ Play</button>
+            <button id="forward">⏩ 10s</button>
+            <select id="speed">
+                <option value="0.5">0.5x</option>
+                <option value="1" selected>Normal</option>
+                <option value="1.5">1.5x</option>
+                <option value="2">2x</option>
+            </select>
+            <select id="resolution">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high" selected>High</option>
+            </select>
+        </div>
+    </div>
+
+    <script>
+        const videoPlayer = document.getElementById('video-player');
+        const playPauseBtn = document.getElementById('play-pause');
+        const backwardBtn = document.getElementById('backward');
+        const forwardBtn = document.getElementById('forward');
+        const speedSelect = document.getElementById('speed');
+        const resolutionSelect = document.getElementById('resolution');
+        const videoSource = document.getElementById('video-source');
+
+        // Play/Pause functionality
+        playPauseBtn.addEventListener('click', () => {
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+                playPauseBtn.textContent = '⏸️ Pause';
+            } else {
+                videoPlayer.pause();
+                playPauseBtn.textContent = '⏯️ Play';
+            }
+        });
+
+        // Jump backward 10 seconds
+        backwardBtn.addEventListener('click', () => {
+            videoPlayer.currentTime -= 10;
+        });
+
+        // Jump forward 10 seconds
+        forwardBtn.addEventListener('click', () => {
+            videoPlayer.currentTime += 10;
+        });
+
+        // Change playback speed
+        speedSelect.addEventListener('change', () => {
+            videoPlayer.playbackRate = speedSelect.value;
+        });
+
+        // Change video resolution (you need to replace the video link based on your actual video URLs for different resolutions)
+        resolutionSelect.addEventListener('change', () => {
+            const selectedResolution = resolutionSelect.value;
+            let videoURL = '';
+
+            // Replace these URLs with your actual video file links
+            if (selectedResolution === 'low') {
+                videoURL = 'path-to-low-resolution-video.mp4'; // Replace this with your low resolution video link
+            } else if (selectedResolution === 'medium') {
+                videoURL = 'path-to-medium-resolution-video.mp4'; // Replace this with your medium resolution video link
+            } else if (selectedResolution === 'high') {
+                videoURL = 'path-to-high-resolution-video.mp4'; // Replace this with your high resolution video link
+            }
+
+            videoSource.src = videoURL;
+            videoPlayer.load();
+        });
+    </script>
+
+</body>
+</html>
